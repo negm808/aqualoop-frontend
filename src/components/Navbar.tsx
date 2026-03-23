@@ -1,0 +1,111 @@
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { ThemeToggle } from './ThemeToggle';
+import { useStore } from '../store/useStore';
+import { Bell } from 'lucide-react';
+
+export const Navbar: React.FC = () => {
+  const wsConnected = useStore((s) => s.wsConnected);
+  const navigate = useNavigate();
+
+  return (
+    <nav style={{
+      height: '62px',
+      position: 'sticky',
+      top: 0,
+      zIndex: 100,
+      background: 'rgba(var(--bg-rgb, 247, 243, 238), 0.92)',
+      backdropFilter: 'blur(16px)',
+      borderBottom: '1px solid var(--border)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '0 24px'
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => navigate('/')}>
+        <div style={{
+          width: '36px',
+          height: '36px',
+          background: 'var(--primary)',
+          borderRadius: '50% 50% 50% 18%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '18px'
+        }}>🌿</div>
+        <span className="text-display-sm" style={{ fontWeight: 700, fontSize: '20px' }}>
+          Aqua<span style={{ color: 'var(--primary)', fontStyle: 'italic' }}>Loop</span>
+        </span>
+      </div>
+
+      <div style={{ display: 'flex', gap: '4px' }}>
+        <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink>
+        <NavLink to="/dashboard" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Dashboard</NavLink>
+        <NavLink to="/fish" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Fish</NavLink>
+        <NavLink to="/plant" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Plant</NavLink>
+        <NavLink to="/readings" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>Readings</NavLink>
+        <NavLink to="/ai" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>AI Terminal</NavLink>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div className="badge badge-neutral" style={{ padding: '6px 12px' }}>
+          <div style={{
+            width: '8px',
+            height: '8px',
+            borderRadius: '50%',
+            background: wsConnected ? 'var(--success)' : 'var(--danger)'
+          }} />
+          <span className="text-label" style={{ fontSize: '9px' }}>
+            {wsConnected ? 'System Live' : 'Offline'}
+          </span>
+        </div>
+
+        <button 
+          className="btn-primary" 
+          style={{ padding: '8px 16px', fontSize: '13px' }}
+          onClick={() => navigate('/dashboard')}
+        >
+          Open Dashboard →
+        </button>
+
+        <div style={{ position: 'relative', cursor: 'pointer' }}>
+          <Bell size={20} color="var(--muted)" />
+          <div style={{
+            position: 'absolute',
+            top: -2,
+            right: -2,
+            width: '8px',
+            height: '8px',
+            background: 'var(--danger)',
+            borderRadius: '50%',
+            border: '2px solid var(--surface)'
+          }} />
+        </div>
+
+        <ThemeToggle />
+      </div>
+
+      <style>{`
+        .nav-link {
+          padding: 8px 16px;
+          border-radius: var(--r-md);
+          text-decoration: none;
+          color: var(--muted);
+          font-family: var(--ff-body);
+          font-size: 14px;
+          font-weight: 500;
+          transition: 0.2s;
+        }
+        .nav-link:hover {
+          background: rgba(58,107,53,0.05);
+          color: var(--text);
+        }
+        .nav-link.active {
+          color: var(--primary);
+          background: rgba(58,107,53,0.1);
+          font-weight: 600;
+        }
+      `}</style>
+    </nav>
+  );
+};
