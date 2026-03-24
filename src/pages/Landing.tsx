@@ -11,22 +11,23 @@ export const Landing: React.FC = () => {
       {/* Section A — Hero */}
       <section style={{
         minHeight: '88vh',
-        padding: '80px 5%',
-        display: 'grid',
-        gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 0.8fr)',
-        gap: '60px',
+        padding: 'var(--section-gap) var(--page-pad)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '40px',
         alignItems: 'center',
         position: 'relative',
         maxWidth: '1700px',
-        margin: '0 auto'
+        margin: '0 auto',
+        textAlign: 'center'
       }}>
         <div style={{
-          position: 'absolute', top: '10%', right: '5%', width: '400px', height: '400px',
-          background: 'var(--primary)', filter: 'blur(120px)', opacity: 0.1, pointerEvents: 'none'
+          position: 'absolute', top: '10%', right: '5%', width: 'clamp(200px, 40vw, 400px)', height: 'clamp(200px, 40vw, 400px)',
+          background: 'var(--primary)', filter: 'blur(120px)', opacity: 0.1, pointerEvents: 'none', zIndex: 0
         }} />
         
-        <div>
-          <div className="badge badge-ok" style={{ marginBottom: '24px', padding: '6px 16px' }}>
+        <div style={{ maxWidth: '800px', position: 'relative', zIndex: 1 }}>
+          <div className="badge badge-ok" style={{ marginBottom: '24px', padding: '6px 16px', margin: '0 auto 24px', width: 'fit-content' }}>
             <span style={{ display: 'inline-block', width: '6px', height: '6px', background: 'var(--success)', borderRadius: '50%', marginRight: '8px' }} />
             G11 Capstone Project · STEM School, Tanta
           </div>
@@ -35,11 +36,11 @@ export const Landing: React.FC = () => {
             Where <span style={{ color: 'var(--primary)', fontStyle: 'italic' }}>fish</span> feed the <span style={{ color: 'var(--secondary)' }}>plants</span> that clean the water.
           </h1>
 
-          <p className="text-body-lg" style={{ color: 'var(--muted)', marginBottom: '40px', maxWidth: '600px' }}>
+          <p className="text-body-lg" style={{ color: 'var(--muted)', marginBottom: '40px', maxWidth: '600px', margin: '0 auto 40px' }}>
             AquaLoop is a professional IoT-based closed-loop aquaponics monitoring and control system designed to automate the management of a small-scale ecosystem.
           </p>
 
-          <div style={{ display: 'flex', gap: '16px', marginBottom: '48px' }}>
+          <div style={{ display: 'flex', gap: '16px', marginBottom: '48px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button className="btn-primary" onClick={() => navigate('/dashboard')}>View Live Dashboard →</button>
             <button className="btn-secondary" onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}>System Architecture ↓</button>
           </div>
@@ -65,7 +66,7 @@ export const Landing: React.FC = () => {
           </div>
         </div>
 
-        <div className="animate-float" style={{ display: 'flex', justifyContent: 'center', width: '100%', gridColumn: '1 / span 2' }}>
+        <div className="animate-float hero-schematic" style={{ display: 'flex', justifyContent: 'center', width: '100%', position: 'relative', zIndex: 1 }}>
            <SystemSchematic />
         </div>
       </section>
@@ -116,13 +117,13 @@ export const Landing: React.FC = () => {
       </section>
 
       {/* Circulation Cycle */}
-      <section id="how-it-works" style={{ padding: '60px 5%', background: 'var(--surface)' }}>
-         <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.2fr)', gap: '80px', alignItems: 'center' }}>
+      <section id="how-it-works" className="section-responsive" style={{ background: 'var(--surface)' }}>
+         <div className="grid-2" style={{ alignItems: 'center' }}>
             <div>
                <div className="section-label" style={{ color: 'var(--primary)' }}>🔄 CIRCULATION</div>
                <h2 className="text-display-lg" style={{ marginBottom: '24px' }}>The Water Cycle</h2>
                <div style={{ padding: '24px', background: 'var(--surface2)', borderRadius: 'var(--r-md)', marginBottom: '32px' }}>
-                  <div className="text-mono" style={{ fontSize: '14px', fontWeight: 600, color: 'var(--primary)', letterSpacing: '0.5px' }}>
+                  <div className="text-mono" style={{ fontSize: 'clamp(12px, 2vw, 14px)', fontWeight: 600, color: 'var(--primary)', letterSpacing: '0.5px' }}>
                      Fish Tank → P1 → Biofilter → P2 → Plant Tank → Gravity → Fish Tank
                   </div>
                </div>
@@ -134,7 +135,7 @@ export const Landing: React.FC = () => {
                   ))}
                </ul>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
                <div className="card" style={{ background: 'var(--primary)', color: 'white' }}>
                   <div className="text-display-sm" style={{ marginBottom: '12px' }}>Monitoring</div>
                   <p className="text-body-sm" style={{ opacity: 0.8 }}>Continuous tracking of pH, TDS, Light, and Water Temperature for ecosystem stability.</p>
@@ -183,8 +184,8 @@ export const Landing: React.FC = () => {
       </section>
 
       {/* NEW: System Intelligence (AI Section) */}
-      <section style={{ padding: '80px 5%', background: 'linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 0.8fr)', gap: '80px', alignItems: 'center', maxWidth: '1400px', margin: '0 auto' }}>
+      <section className="section-responsive" style={{ background: 'linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%)' }}>
+          <div className="grid-2" style={{ alignItems: 'center', maxWidth: '1400px', margin: '0 auto' }}>
             <div>
                <div className="section-label" style={{ color: 'var(--accent)' }}>🧠 COGNITIVE LAYER</div>
                <h2 className="text-display-lg" style={{ marginBottom: '32px' }}>Biological <span style={{ color: 'var(--accent)' }}>Intelligence</span> by AquaLoop AI</h2>
@@ -192,7 +193,7 @@ export const Landing: React.FC = () => {
                   Our proprietary AI system doesn't just monitor data—it understands biology. By analyzing trends in pH, TDS, and lighting, it predicts ecosystem events before they happen.
                </div>
                
-               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px' }}>
+               <div className="grid-auto">
                   {[
                     { i: <Brain size={24} />, t: 'Predictive Analytics', d: 'Predicts nitrate spikes and pH drifts 12 hours in advance.' },
                     { i: <Activity size={24} />, t: 'Trend Identification', d: 'Recognizes patterns in fish metabolism and plant nutrient uptake.' },
@@ -207,8 +208,8 @@ export const Landing: React.FC = () => {
                   ))}
                </div>
             </div>
-            <div style={{ position: 'relative' }}>
-               <div style={{ padding: '40px', background: 'var(--surface-dark)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border)', position: 'relative', zIndex: 1, boxShadow: '0 40px 100px rgba(0,0,0,0.2)' }}>
+            <div style={{ position: 'relative', marginTop: '40px' }}>
+               <div style={{ padding: 'clamp(20px, 5vw, 40px)', background: 'var(--surface-dark)', borderRadius: 'var(--r-xl)', border: '1px solid var(--border)', position: 'relative', zIndex: 1, boxShadow: '0 40px 100px rgba(0,0,0,0.2)' }}>
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '24px' }}>
                     <div style={{ width: '40px', height: '40px', background: 'var(--accent)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>AI</div>
                     <div className="text-display-sm" style={{ fontSize: '16px' }}>AquaLoop Assistant</div>
@@ -317,6 +318,37 @@ export const Landing: React.FC = () => {
           ))}
         </div>
       </footer>
+      <style>{`
+        @media (min-width: 1024px) {
+          section {
+            padding-top: 100px !important;
+            padding-bottom: 100px !important;
+          }
+          .hero-schematic {
+            grid-column: 2 / span 1 !important;
+            margin-top: 0 !important;
+          }
+          .Landing_section__hero {
+            display: grid !important;
+            grid-template-columns: 1.2fr 0.8fr !important;
+            text-align: left !important;
+            align-items: center !important;
+          }
+          .Landing_section__hero div:first-child {
+            margin: 0 !important;
+            text-align: left !important;
+          }
+          .Landing_section__hero .badge {
+            margin: 0 0 24px 0 !important;
+          }
+          .Landing_section__hero p {
+            margin: 0 0 40px 0 !important;
+          }
+          .Landing_section__hero div:nth-child(4) {
+            justify-content: flex-start !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

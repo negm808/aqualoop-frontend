@@ -157,13 +157,12 @@ export const AI: React.FC = () => {
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.05)',
         overflow: 'hidden',
         position: 'relative',
-        height: '85vh', // Significantly increased height
-        minHeight: '800px',
+        height: 'clamp(500px, 85vh, 85vh)',
+        minHeight: 'clamp(400px, 60vh, 800px)',
         flexShrink: 0
       }}>
-        {/* Terminal Header */}
-        <div style={{ 
-          padding: '24px 32px', 
+        <div className="terminal-header" style={{ 
+          padding: 'clamp(16px, 3vw, 24px) clamp(16px, 4vw, 32px)', 
           background: 'linear-gradient(90deg, var(--primary) 0%, #4facfe 100%)',
           color: 'white',
           display: 'flex',
@@ -172,28 +171,28 @@ export const AI: React.FC = () => {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <div className="brain-pulse" style={{ 
-              width: '40px', 
-              height: '40px', 
+              width: 'clamp(32px, 8vw, 40px)', 
+              height: 'clamp(32px, 8vw, 40px)', 
               borderRadius: '12px', 
               background: 'rgba(255,255,255,0.2)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <Bot size={24} />
+              <Bot size={20} />
             </div>
             <div>
-              <h2 style={{ margin: 0, fontSize: '20px', fontWeight: 700 }}>NEURAL CORE</h2>
-              <div style={{ fontSize: '12px', opacity: 0.8, display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <h2 style={{ margin: 0, fontSize: 'clamp(16px, 4vw, 20px)', fontWeight: 700 }}>NEURAL CORE</h2>
+              <div className="desktop-only" style={{ fontSize: '12px', opacity: 0.8, display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Activity size={12} /> HYBRID PROCESSING ARCHITECTURE
               </div>
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '12px' }}>
-             <span className={`badge ${wsConnected ? 'badge-ok' : 'badge-neutral'}`} style={{ border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white' }}>
-               {wsConnected ? 'SYNCED' : 'LOCAL'}
+          <div style={{ display: 'flex', gap: '8px' }}>
+             <span className={`badge ${wsConnected ? 'badge-ok' : 'badge-neutral'}`} style={{ border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white', fontSize: '9px' }}>
+               {wsConnected ? 'LIVE' : 'LOCAL'}
              </span>
-             <span className="badge" style={{ border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white' }}>
+             <span className="badge desktop-only" style={{ border: 'none', background: 'rgba(255,255,255,0.2)', color: 'white', fontSize: '9px' }}>
                {activeProfile.toUpperCase()}
              </span>
           </div>

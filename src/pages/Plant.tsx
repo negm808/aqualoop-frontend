@@ -73,8 +73,8 @@ export const Plant: React.FC = () => {
       </div>
 
       <div className="card">
-         <div className="section-label" style={{ color: 'var(--secondary)' }}>DWC Technical Specs</div>
-         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px', marginTop: '24px' }}>
+         <div className="section-label" style={{ color: 'var(--secondary)', marginBottom: '24px' }}>DWC Technical Specs</div>
+         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '24px' }}>
             <div>
                <h4 className="text-display-sm" style={{ fontSize: '16px', marginBottom: '12px' }}>DWC Layout</h4>
                <p className="text-body-sm" style={{ color: 'var(--muted)', lineHeight: '1.6' }}>
@@ -94,12 +94,12 @@ export const Plant: React.FC = () => {
                </p>
             </div>
          </div>
-         <div style={{ marginTop: '32px', padding: '24px', background: 'var(--primary)', color: 'white', borderRadius: 'var(--r-lg)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+         <div className="stack-on-mobile" style={{ marginTop: '32px', padding: '24px', background: 'var(--primary)', color: 'white', borderRadius: 'var(--r-lg)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '24px' }}>
             <div>
                <h3 className="text-display-sm" style={{ margin: 0 }}>Biological Cleaning Log</h3>
                <p className="text-body-sm" style={{ opacity: 0.9, marginBottom: 0 }}>Plants have filtered approximately 120L of water today.</p>
             </div>
-            <div className="text-display-md" style={{ margin: 0 }}>4.2 <span style={{ fontSize: '14px' }}>mg/L Oxygen</span></div>
+            <div className="text-display-md" style={{ margin: 0, whiteSpace: 'nowrap' }}>4.2 <span style={{ fontSize: '14px' }}>mg/L O₂</span></div>
          </div>
       </div>
     </div>

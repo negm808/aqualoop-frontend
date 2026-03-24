@@ -55,12 +55,12 @@ export const Readings: React.FC = () => {
 
   return (
     <div className="page">
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '32px' }}>
-         <div>
+      <header className="stack-on-mobile" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', gap: '24px' }}>
+         <div style={{ flex: 1 }}>
             <h1 className="text-display-lg">Sensor Readings</h1>
             <p className="text-body" style={{ color: 'var(--muted)' }}>Complete data log from all connected sensors.</p>
          </div>
-         <div style={{ display: 'flex', gap: '12px' }}>
+         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', width: '100%', maxWidth: 'fit-content' }}>
             <input 
               type="file" 
               ref={fileInputRef} 
@@ -68,11 +68,11 @@ export const Readings: React.FC = () => {
               onChange={handleFileUpload} 
               accept=".xlsx,.xls,.csv" 
             />
-            <button className="btn-secondary" onClick={() => fileInputRef.current?.click()} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-               <Upload size={18} /> Upload Data
+            <button className="btn-secondary" onClick={() => fileInputRef.current?.click()} style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'center', padding: '10px 16px', fontSize: '13px' }}>
+               <Upload size={16} /> Import
             </button>
-            <button onClick={downloadCSV} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-               <Download size={18} /> Download Excel
+            <button onClick={downloadCSV} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'center', padding: '10px 16px', fontSize: '13px' }}>
+               <Download size={16} /> Export
             </button>
          </div>
       </header>
@@ -126,11 +126,11 @@ export const Readings: React.FC = () => {
         .table-row-hover:hover { background: rgba(58, 107, 53, 0.05) !important; }
       `}</style>
 
-      <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="stack-on-mobile" style={{ marginTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
          <div className="text-body-sm" style={{ color: 'var(--muted)' }}>Showing {filteredReadings.length} of {readings.length} total records ({activeProfile.toUpperCase()} filtered)</div>
-         <div style={{ display: 'flex', gap: '8px' }}>
-            <button className="btn-secondary" style={{ padding: '6px 12px', fontSize: '12px' }}>Previous</button>
-            <button className="btn-secondary" style={{ padding: '6px 12px', fontSize: '12px' }}>Next</button>
+         <div style={{ display: 'flex', gap: '8px', width: '100%', maxWidth: '200px' }}>
+            <button className="btn-secondary" style={{ padding: '8px 12px', fontSize: '12px', flex: 1 }}>Previous</button>
+            <button className="btn-secondary" style={{ padding: '8px 12px', fontSize: '12px', flex: 1 }}>Next</button>
          </div>
       </div>
     </div>
