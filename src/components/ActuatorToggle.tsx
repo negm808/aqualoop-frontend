@@ -34,28 +34,30 @@ export const ActuatorToggle: React.FC<ActuatorToggleProps> = ({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      padding: '16px 0',
-      borderBottom: '1px solid var(--border)'
+      padding: 'clamp(12px, 2vw, 16px) 0',
+      borderBottom: '1px solid var(--border)',
+      gap: '12px'
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(12px, 3vw, 16px)', minWidth: 0 }}>
         <div style={{
-          width: '44px',
-          height: '44px',
+          width: 'clamp(40px, 10vw, 44px)',
+          height: 'clamp(40px, 10vw, 44px)',
+          flexShrink: 0,
           background: state === 'on' ? 'rgba(58, 107, 53, 0.1)' : 'var(--surface2)',
           borderRadius: 'var(--r-md)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '22px',
+          fontSize: 'clamp(18px, 5vw, 22px)',
           transition: 'all 0.3s ease'
         }} className={state === 'on' ? 'animate-pulse' : ''}>{icon}</div>
-        <div>
-          <div className="text-body" style={{ fontWeight: 600 }}>{name}</div>
-          <div className="text-body-sm" style={{ color: 'var(--muted)' }}>{subtitle}</div>
+        <div style={{ minWidth: 0 }}>
+          <div className="text-body" style={{ fontWeight: 600, fontSize: 'clamp(13px, 3vw, 14px)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
+          <div className="text-body-sm" style={{ color: 'var(--muted)', fontSize: 'clamp(11px, 2.5vw, 12px)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{subtitle}</div>
         </div>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(12px, 3vw, 16px)', flexShrink: 0 }}>
         <button 
           onClick={() => handleModeChange(mode === 'auto' ? 'manual' : 'auto')}
           className="badge" 
@@ -65,7 +67,8 @@ export const ActuatorToggle: React.FC<ActuatorToggleProps> = ({
             color: mode === 'auto' ? 'white' : 'var(--muted)',
             border: 'none',
             fontSize: '9px',
-            padding: '4px 8px'
+            padding: '4px 8px',
+            borderRadius: '4px'
           }}
         >
           {mode.toUpperCase()}

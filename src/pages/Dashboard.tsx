@@ -44,100 +44,62 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="page">
-      <header style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column', gap: '40px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <div>
-            <h1 className="text-display-lg" style={{ marginBottom: '16px', fontSize: 'min(48px, 4vw)', lineHeight: 1.1 }}>
+      <header style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <div className="stack-on-mobile" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '24px' }}>
+          <div style={{ flex: 1 }}>
+            <h1 className="text-display-lg" style={{ marginBottom: '16px', fontSize: 'clamp(32px, 8vw, 46px)', lineHeight: 1.1 }}>
               Good afternoon,<br/><span style={{ fontStyle: 'italic', color: 'var(--primary)' }}>Negm.</span>
             </h1>
-            <div className="text-body" style={{ color: 'var(--muted)', fontSize: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div className="text-body" style={{ color: 'var(--muted)', fontSize: '15px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                 System is running normally · {readings.length} readings recorded
                 {profileConfirmationPending && (
-                  <span className="badge badge-neutral" style={{ fontSize: '10px', animation: 'pulse 1.5s infinite' }}>SYNCING HARDWARE...</span>
+                  <span className="badge badge-neutral" style={{ fontSize: '10px', animation: 'pulse 1.5s infinite' }}>SYNCING...</span>
                 )}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: wsConnected ? 'var(--success)' : 'var(--danger)', boxShadow: wsConnected ? '0 0 8px var(--success-bg)' : 'none' }} />
                   Server {wsConnected ? 'Live' : 'Offline'}
                 </span>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: useStore.getState().espConnected ? 'var(--success)' : 'var(--muted)', boxShadow: useStore.getState().espConnected ? '0 0 8px var(--success-bg)' : 'none' }} />
-                  Hardware {useStore.getState().espConnected ? 'Connected' : 'Searching...'}
+                  Hardware {useStore.getState().espConnected ? 'Connected' : 'Search...'}
                 </span>
               </div>
             </div>
           </div>
           
-          <div style={{ width: '300px' }}>
+          <div className="weather-container" style={{ width: '100%', maxWidth: '300px' }}>
             <WeatherWidget />
           </div>
         </div>
 
         {/* Global System Switcher - Top Level Navigation */}
-        <div className="card glass" style={{ 
-          padding: '8px', 
-          display: 'flex', 
-          gap: '8px', 
-          background: 'rgba(255,255,255,0.4)',
-          borderRadius: 'var(--r-lg)',
-          border: '1px solid var(--border)',
-          boxShadow: '0 8px 32px rgba(58, 107, 53, 0.05)',
-          opacity: profileConfirmationPending ? 0.7 : 1,
-          pointerEvents: profileConfirmationPending ? 'none' : 'auto'
-        }}>
-          {[
-            { id: 'main', label: 'MAIN ECOSYSTEM', sub: 'Mullet + Lettuce', icon: '🌿' },
-            { id: 'db1', label: 'DB1 CLUSTER', sub: 'Mabroka + Strawberry', icon: '🍓' },
-            { id: 'db2', label: 'DB2 CLUSTER', sub: 'Tilapia + Basil', icon: '🍃' }
-          ].map((p) => (
-            <button
-              key={p.id}
-              onClick={() => {
-                setActiveProfile(p.id as any);
-                sendCommand('set_profile', { profile: p.id });
-              }}
-              style={{
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                gap: '16px',
-                padding: '16px 24px',
-                borderRadius: 'var(--r-md)',
-                border: activeProfile === p.id ? '2px solid var(--primary)' : '1px solid transparent',
-                background: activeProfile === p.id ? 'var(--surface)' : 'transparent',
-                cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-            >
-              <div style={{ 
-                fontSize: '24px', 
-                opacity: activeProfile === p.id ? 1 : 0.5,
-                transform: activeProfile === p.id ? 'scale(1.1)' : 'scale(1)'
-              }}>{p.icon}</div>
-              <div style={{ textAlign: 'left' }}>
-                <div className="text-label" style={{ 
-                  fontSize: '10px', 
-                  color: activeProfile === p.id ? 'var(--primary)' : 'var(--muted)',
-                  letterSpacing: '0.1em'
-                }}>{p.label}</div>
-                <div className="text-body" style={{ 
-                  fontWeight: 700, 
-                  color: activeProfile === p.id ? 'var(--text)' : 'var(--muted)'
-                }}>{p.sub}</div>
-              </div>
-              {activeProfile === p.id && (
-                <div style={{ 
-                  position: 'absolute', 
-                  bottom: 0, left: 0, right: 0, 
-                  height: '4px', background: 'var(--primary)' 
-                }} />
-              )}
-            </button>
-          ))}
+        <div className="profile-switcher-container">
+          <div className="profile-switcher-scroll">
+            {[
+              { id: 'main', label: 'MAIN ECOSYSTEM', sub: 'Mullet + Lettuce', icon: '🌿' },
+              { id: 'db1', label: 'DB1 CLUSTER', sub: 'Mabroka + Strawberry', icon: '🍓' },
+              { id: 'db2', label: 'DB2 CLUSTER', sub: 'Tilapia + Basil', icon: '🍃' }
+            ].map((p) => (
+              <button
+                key={p.id}
+                onClick={() => {
+                  setActiveProfile(p.id as any);
+                  sendCommand('set_profile', { profile: p.id });
+                }}
+                className={`profile-btn ${activeProfile === p.id ? 'active' : ''}`}
+              >
+                <div className="profile-icon">{p.icon}</div>
+                <div style={{ textAlign: 'left' }}>
+                  <div className="text-label" style={{ fontSize: '9px', letterSpacing: '0.1em' }}>{p.label}</div>
+                  <div className="text-body" style={{ fontWeight: 700, whiteSpace: 'nowrap' }}>{p.sub}</div>
+                </div>
+                {activeProfile === p.id && <div className="profile-active-bar" />}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
@@ -284,6 +246,65 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <style>{`
+        .profile-switcher-container {
+          overflow: hidden;
+          margin: 0 calc(-1 * var(--page-pad));
+        }
+        .profile-switcher-scroll {
+          display: flex;
+          gap: 12px;
+          overflow-x: auto;
+          padding: 8px var(--page-pad) 20px;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+        }
+        .profile-switcher-scroll::-webkit-scrollbar { display: none; }
+        
+        .profile-btn {
+          flex: 0 0 auto;
+          min-width: 240px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 16px 24px;
+          border-radius: var(--r-md);
+          border: 1px solid var(--border);
+          background: var(--surface);
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+          scroll-snap-align: start;
+        }
+        .profile-btn.active {
+          border: 2px solid var(--primary);
+          box-shadow: 0 8px 24px rgba(58, 107, 53, 0.1);
+        }
+        .profile-icon {
+          font-size: 24px;
+          transition: transform 0.3s;
+        }
+        .profile-btn.active .profile-icon { transform: scale(1.1); }
+        .profile-btn .text-label { color: var(--muted); }
+        .profile-btn.active .text-label { color: var(--primary); }
+        .profile-active-bar {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          height: 4px; background: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+          .profile-btn {
+            min-width: 200px;
+            padding: 12px 16px;
+          }
+          .weather-container {
+            max-width: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

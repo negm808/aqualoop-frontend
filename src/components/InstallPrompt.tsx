@@ -49,27 +49,30 @@ export const InstallPrompt: React.FC = () => {
   return (
     <div style={{
       position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      background: 'var(--primary)',
+      top: '12px',
+      left: '12px',
+      right: '12px',
+      background: 'rgba(3, 105, 161, 0.95)',
+      backdropFilter: 'blur(12px)',
       color: '#fff',
       padding: '12px 16px',
       zIndex: 99999,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-      fontFamily: 'var(--ff-body)'
+      boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+      borderRadius: '16px',
+      fontFamily: 'var(--ff-body)',
+      border: '1px solid rgba(255,255,255,0.1)'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <div style={{ background: '#fff', borderRadius: '8px', padding: '6px', color: 'var(--primary)', display: 'flex' }}>
-          <Download size={20} />
+        <div style={{ background: '#fff', borderRadius: '10px', padding: '6px', color: 'var(--primary)', display: 'flex' }}>
+          <Download size={18} />
         </div>
         <div>
-          <h4 style={{ margin: 0, fontSize: '14px', fontWeight: 600 }}>Get AquaLoop App</h4>
-          <p style={{ margin: 0, fontSize: '11px', opacity: 0.9 }}>
-            {isIOS ? "Tap Share icon ⍗ then 'Add to Home Screen'" : "Add to home screen for full experience"}
+          <h4 style={{ margin: 0, fontSize: '13px', fontWeight: 700, letterSpacing: '-0.3px' }}>Download AquaLoop App</h4>
+          <p style={{ margin: 0, fontSize: '11px', opacity: 0.9, fontWeight: 500 }}>
+            {isIOS ? "Tap Share ⍗ -> 'Add to Home Screen'" : "Add to home screen for full experience"}
           </p>
         </div>
       </div>
@@ -82,11 +85,12 @@ export const InstallPrompt: React.FC = () => {
               background: '#fff', 
               color: 'var(--primary)', 
               border: 'none', 
-              padding: '6px 12px', 
-              borderRadius: '20px', 
-              fontWeight: 600, 
-              fontSize: '12px',
-              cursor: 'pointer'
+              padding: '6px 14px', 
+              borderRadius: '10px', 
+              fontWeight: 700, 
+              fontSize: '11px',
+              cursor: 'pointer',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
             }}
           >
             Install
@@ -94,9 +98,9 @@ export const InstallPrompt: React.FC = () => {
         )}
         <button 
           onClick={() => setIsVisible(false)} 
-          style={{ background: 'transparent', border: 'none', color: '#fff', display: 'flex', cursor: 'pointer', padding: 0 }}
+          style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', display: 'flex', cursor: 'pointer', padding: '4px', borderRadius: '50%' }}
         >
-          <X size={20} />
+          <X size={16} />
         </button>
       </div>
     </div>
