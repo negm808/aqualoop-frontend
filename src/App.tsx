@@ -9,12 +9,15 @@ import { AI } from './pages/AI';
 import { Readings } from './pages/Readings';
 import { useWebSocket } from './hooks/useWebSocket';
 
+import { InstallPrompt } from './components/InstallPrompt';
+
 const App: React.FC = () => {
   // Initialize WebSocket globally
   useWebSocket();
 
   return (
     <BrowserRouter>
+      <InstallPrompt />
       <Navbar />
       <main style={{ minHeight: 'calc(100vh - 62px)' }}>
         <Routes>

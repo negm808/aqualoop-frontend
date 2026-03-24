@@ -2,13 +2,14 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
 import { useStore } from '../store/useStore';
-import { Bell } from 'lucide-react';
+import { Bell, Home, LayoutDashboard, Fish, Leaf, Bot, Activity } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const wsConnected = useStore((s) => s.wsConnected);
   const navigate = useNavigate();
 
   return (
+    <>
     <nav style={{
       height: '62px',
       position: 'sticky',
@@ -38,7 +39,7 @@ export const Navbar: React.FC = () => {
         </span>
       </div>
 
-      <div style={{ display: 'flex', gap: '4px' }}>
+      <div className="desktop-only" style={{ display: 'flex', gap: '4px' }}>
         <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink>
         <NavLink to="/dashboard" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Dashboard</NavLink>
         <NavLink to="/fish" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Fish</NavLink>
@@ -68,7 +69,7 @@ export const Navbar: React.FC = () => {
           Open Dashboard →
         </button>
 
-        <div style={{ position: 'relative', cursor: 'pointer' }}>
+        <div className="desktop-only" style={{ position: 'relative', cursor: 'pointer' }}>
           <Bell size={20} color="var(--muted)" />
           <div style={{
             position: 'absolute',
@@ -107,5 +108,27 @@ export const Navbar: React.FC = () => {
         }
       `}</style>
     </nav>
+
+    <div className="mobile-tab-bar mobile-only">
+      <NavLink to="/" className={({ isActive }) => `mobile-tab-link ${isActive ? 'active' : ''}`}>
+        <Home size={20} /> Home
+      </NavLink>
+      <NavLink to="/dashboard" className={({ isActive }) => `mobile-tab-link ${isActive ? 'active' : ''}`}>
+        <LayoutDashboard size={20} /> Dash
+      </NavLink>
+      <NavLink to="/fish" className={({ isActive }) => `mobile-tab-link ${isActive ? 'active' : ''}`}>
+        <Fish size={20} /> Fish
+      </NavLink>
+      <NavLink to="/plant" className={({ isActive }) => `mobile-tab-link ${isActive ? 'active' : ''}`}>
+        <Leaf size={20} /> Plant
+      </NavLink>
+      <NavLink to="/readings" className={({ isActive }) => `mobile-tab-link ${isActive ? 'active' : ''}`}>
+        <Activity size={20} /> Data
+      </NavLink>
+      <NavLink to="/ai" className={({ isActive }) => `mobile-tab-link ${isActive ? 'active' : ''}`}>
+        <Bot size={20} /> AI
+      </NavLink>
+    </div>
+    </>
   );
 };
