@@ -44,10 +44,10 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="page">
-      <header style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column', gap: '32px' }}>
-        <div className="stack-on-mobile" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '24px' }}>
+      <header style={{ marginBottom: '32px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div className="stack-on-mobile" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '16px' }}>
           <div style={{ flex: 1 }}>
-            <h1 className="text-display-lg" style={{ marginBottom: '16px', fontSize: 'clamp(32px, 8vw, 46px)', lineHeight: 1.1 }}>
+            <h1 className="text-display-lg" style={{ marginBottom: '12px', lineHeight: 1.1 }}>
               Good afternoon,<br/><span style={{ fontStyle: 'italic', color: 'var(--primary)' }}>Negm.</span>
             </h1>
             <div className="text-body" style={{ color: 'var(--muted)', fontSize: '15px', display: 'flex', flexDirection: 'column', gap: '8px' }}>

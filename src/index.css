@@ -233,13 +233,95 @@ body {
 @media (max-width: 768px) {
   .desktop-only { display: none !important; }
   
+  /* ===== MOBILE CARD & COMPONENT OVERRIDES ===== */
+
+  :root {
+    --section-gap: 16px;
+    --page-pad: 14px;
+  }
+
+  .page {
+    padding: 16px var(--page-pad) 24px;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: var(--r-md);
+  }
+
+  .grid-2 {
+    gap: 16px;
+  }
+
+  .grid-auto {
+    gap: 14px;
+  }
+
+  .grid-3 {
+    gap: 14px;
+  }
+
+  /* Buttons — compact for thumbs */
+  .btn-primary {
+    padding: 9px 16px;
+    font-size: 13px;
+    border-radius: var(--r-sm);
+  }
+
+  .btn-secondary {
+    padding: 9px 16px;
+    font-size: 13px;
+    border-radius: var(--r-sm);
+  }
+
+  /* Badges — smaller */
+  .badge {
+    font-size: 8px;
+    padding: 3px 8px;
+    letter-spacing: 0.6px;
+    gap: 4px;
+  }
+
+  /* Section labels — tighter */
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    margin-bottom: 8px;
+  }
+
+  /* Typography scale reductions for mobile */
+  .text-display-xl { font-size: clamp(28px, 7vw, 38px) !important; }
+  .text-display-lg { font-size: clamp(22px, 5.5vw, 30px) !important; }
+  .text-display-md { font-size: clamp(17px, 4vw, 22px) !important; }
+  .text-display-sm { font-size: clamp(14px, 3.5vw, 17px) !important; }
+  .text-body-lg    { font-size: 15px !important; }
+  .text-body       { font-size: 13px !important; }
+  .text-body-sm    { font-size: 12px !important; }
+
+  /* Header spacing */
+  header {
+    margin-bottom: 20px !important;
+  }
+
+  /* Remove hover lift on mobile (no hover on touch) */
+  .card-hover:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Schematic container — less padding */
+  .hero-schematic > div {
+    padding: 12px !important;
+  }
+
+  /* Navigation */
   .mobile-tab-bar {
     display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 70px;
+    height: 64px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -261,9 +343,9 @@ body {
     justify-content: center;
     color: var(--muted);
     text-decoration: none;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 500;
-    gap: 4px;
+    gap: 3px;
     transition: color 0.2s;
     flex: 1;
     height: 100%;
@@ -275,7 +357,40 @@ body {
   }
 
   body {
-    padding-bottom: calc(70px + env(safe-area-inset-bottom));
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+
+  /* Top navbar — compact */
+  nav {
+    height: 52px !important;
+    padding: 0 12px !important;
+  }
+
+  nav img {
+    height: 32px !important;
+  }
+
+  main {
+    min-height: calc(100vh - 52px) !important;
+  }
+}
+
+/* Extra small phones (< 400px) — even tighter */
+@media (max-width: 400px) {
+  .card {
+    padding: 12px;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .text-display-xl { font-size: 26px !important; }
+  .text-display-lg { font-size: 20px !important; }
+
+  .grid-auto {
+    grid-template-columns: 1fr !important;
   }
 }
 
