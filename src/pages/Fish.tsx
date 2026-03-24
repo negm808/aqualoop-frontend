@@ -13,9 +13,9 @@ export const Fish: React.FC = () => {
   return (
     <div className="page">
       <header style={{ marginBottom: '40px' }}>
-         <div className="badge badge-ok" style={{ marginBottom: '16px' }}>COMPONENT: TANK 1 (SOURCE)</div>
+         <div className="badge badge-ok" style={{ marginBottom: '16px', fontSize: '10px' }}>COMPONENT: TANK 1 (SOURCE)</div>
          <h1 className="text-display-lg">Fish Tank Environment</h1>
-         <p className="text-body" style={{ color: 'var(--muted)' }}>Monitoring {setpoints?.fish || 'Grey Mullet'} health and organic waste production in the {setpoints?.name || activeProfile.toUpperCase()} aquatic habitat.</p>
+         <p className="text-body" style={{ color: 'var(--muted)', fontSize: 'clamp(14px, 2vw, 15px)' }}>Monitoring {setpoints?.fish || 'Grey Mullet'} health and organic waste production in the {setpoints?.name || activeProfile.toUpperCase()} aquatic habitat.</p>
       </header>
 
       <div className="grid-2" style={{ marginBottom: '40px' }}>
@@ -67,7 +67,7 @@ export const Fish: React.FC = () => {
          </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '32px' }}>
+      <div className="grid-auto" style={{ gap: '24px' }}>
         <div className="card">
            <div className="section-label">Biological Context</div>
            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginTop: '24px' }}>

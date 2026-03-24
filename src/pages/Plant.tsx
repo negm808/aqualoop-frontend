@@ -14,9 +14,9 @@ export const Plant: React.FC = () => {
   return (
     <div className="page">
       <header style={{ marginBottom: '40px' }}>
-         <div className="badge badge-ok" style={{ marginBottom: '16px', background: 'var(--secondary)', color: 'white', border: 'none' }}>COMPONENT: TANK 3 (DWC)</div>
+         <div className="badge badge-ok" style={{ marginBottom: '16px', background: 'var(--secondary)', color: 'white', border: 'none', fontSize: '10px' }}>COMPONENT: TANK 3 (DWC)</div>
          <h1 className="text-display-lg">Plant Tank Environment</h1>
-         <p className="text-body" style={{ color: 'var(--muted)' }}>Managing {setpoints?.plant || 'Lettuce'} growth in Deep Water Culture (DWC) with floating raft system.</p>
+         <p className="text-body" style={{ color: 'var(--muted)', fontSize: 'clamp(14px, 2vw, 15px)' }}>Managing {setpoints?.plant || 'Lettuce'} growth in Deep Water Culture (DWC) with floating raft system.</p>
       </header>
 
       <div className="grid-2" style={{ marginBottom: '40px' }}>
