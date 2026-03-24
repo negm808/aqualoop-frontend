@@ -23,20 +23,8 @@ export const Navbar: React.FC = () => {
       justifyContent: 'space-between',
       padding: '0 24px'
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => navigate('/')}>
-        <div style={{
-          width: '36px',
-          height: '36px',
-          background: 'var(--primary)',
-          borderRadius: '50% 50% 50% 18%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '18px'
-        }}>🌿</div>
-        <span className="text-display-sm" style={{ fontWeight: 700, fontSize: '20px' }}>
-          Aqua<span style={{ color: 'var(--primary)', fontStyle: 'italic' }}>Loop</span>
-        </span>
+      <div style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => navigate('/')}>
+        <img src="/source-logo.png" alt="AquaLoop Logo" style={{ height: '42px', width: 'auto', objectFit: 'contain' }} />
       </div>
 
       <div className="desktop-only" style={{ display: 'flex', gap: '4px' }}>
