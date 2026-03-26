@@ -9,9 +9,19 @@ export interface SensorReading {
   profile: 'main' | 'db1' | 'db2';
 }
 
+export interface ActuatorReading {
+  pump1: number;
+  pump2: number;
+  diluted_pump: number;
+  led: number;
+  timestamp: string;
+}
+
 export interface ActuatorState {
   state: 'on' | 'off';
   mode: 'auto' | 'manual';
+  energy: number; // accumulated energy in Wh
+  power: number;  // instantaneous power in W
 }
 
 export interface ProfileSetpoints {
@@ -31,6 +41,7 @@ interface AppStore {
   // Live data
   latestReading: SensorReading | null;
   readings: SensorReading[];          // rolling buffer
+  actuatorReadings: ActuatorReading[];  // history for chart
   actuators: {
     pump1: ActuatorState;
     pump2: ActuatorState;
@@ -40,6 +51,7 @@ interface AppStore {
   activeProfile: 'main' | 'db1' | 'db2';
   setpoints: ProfileSetpoints | null;
   profileConfirmationPending: boolean;
+  lastEnergyUpdate: number | null; // Timestamp for deltaTime calculation
 
   // Connection
   wsConnected: boolean;
@@ -62,6 +74,8 @@ interface AppStore {
   setEspConnected: (connected: boolean) => void;
   setTheme: (theme: 'light' | 'dark') => void;
   addReading: (reading: SensorReading) => void;
+  tickEnergy: () => void;
+  resetEnergy: (actuator?: string) => void;
 }
 
 const PROFILE_METADATA = {
@@ -73,15 +87,17 @@ const PROFILE_METADATA = {
 export const useStore = create<AppStore>((set, get) => ({
   latestReading: null,
   readings: [],
+  actuatorReadings: [],
   actuators: {
-    pump1: { state: 'off', mode: 'auto' },
-    pump2: { state: 'off', mode: 'auto' },
-    diluted_pump: { state: 'off', mode: 'auto' },
-    led: { state: 'off', mode: 'auto' },
+    pump1: { state: 'off', mode: 'auto', energy: 0, power: 0 },
+    pump2: { state: 'off', mode: 'auto', energy: 0, power: 0 },
+    diluted_pump: { state: 'off', mode: 'auto', energy: 0, power: 0 },
+    led: { state: 'off', mode: 'auto', energy: 0, power: 0 },
   },
   activeProfile: 'main',
   setpoints: null,
   profileConfirmationPending: false,
+  lastEnergyUpdate: null,
   wsConnected: false,
   espConnected: false,
   lastSyncTime: null,
@@ -137,5 +153,71 @@ export const useStore = create<AppStore>((set, get) => ({
   },
   addReading: (reading) => set((s) => ({
     readings: [reading, ...s.readings].slice(0, 720) // Keep last hour (5s interval)
-  }))
+  })),
+  tickEnergy: () => {
+    const now = Date.now();
+    const lastUpdate = get().lastEnergyUpdate;
+    if (!lastUpdate) {
+      set({ lastEnergyUpdate: now });
+      return;
+    }
+
+    const deltaTimeHours = (now - lastUpdate) / (1000 * 3600);
+    const POWER_RATINGS: Record<string, number> = {
+      pump1: 5,
+      pump2: 5,
+      diluted_pump: 4,
+      led: 6
+    };
+
+    set((s) => {
+      const nextActuators = { ...s.actuators };
+      
+      Object.keys(POWER_RATINGS).forEach((id) => {
+        const actKey = id as keyof typeof s.actuators;
+        const actuator = nextActuators[actKey];
+        const ratedPower = POWER_RATINGS[id];
+        
+        // Update instantaneous power
+        actuator.power = actuator.state === 'on' ? ratedPower : 0;
+        
+        // Accumulate energy if ON
+        if (actuator.state === 'on') {
+          actuator.energy += ratedPower * deltaTimeHours;
+        }
+      });
+
+      // Add to history buffer (keep last 300 points ~ 5 minutes if 1s interval)
+      const newActReading: ActuatorReading = {
+        pump1: nextActuators.pump1.power,
+        pump2: nextActuators.pump2.power,
+        diluted_pump: nextActuators.diluted_pump.power,
+        led: nextActuators.led.power,
+        timestamp: new Date().toISOString()
+      };
+
+      return { 
+        actuators: nextActuators,
+        actuatorReadings: [...s.actuatorReadings, newActReading].slice(-300),
+        lastEnergyUpdate: now
+      };
+    });
+  },
+  resetEnergy: (actuator) => set((s) => {
+    if (actuator) {
+      return {
+        actuators: {
+          ...s.actuators,
+          [actuator]: { ...s.actuators[actuator as keyof typeof s.actuators], energy: 0 }
+        }
+      };
+    } else {
+      // Reset all
+      const nextActuators = { ...s.actuators };
+      Object.keys(nextActuators).forEach(k => {
+        nextActuators[k as keyof typeof nextActuators].energy = 0;
+      });
+      return { actuators: nextActuators };
+    }
+  })
 }));

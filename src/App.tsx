@@ -7,13 +7,16 @@ import { Fish } from './pages/Fish';
 import { Plant } from './pages/Plant';
 import { AI } from './pages/AI';
 import { Readings } from './pages/Readings';
+import { ActuatorsDashboard } from './pages/ActuatorsDashboard';
 import { useWebSocket } from './hooks/useWebSocket';
+import { useEnergyTracker } from './hooks/useEnergyTracker';
 
 import { InstallPrompt } from './components/InstallPrompt';
 
 const App: React.FC = () => {
-  // Initialize WebSocket globally
+  // Initialize WebSocket and Energy tracking globally
   useWebSocket();
+  useEnergyTracker();
 
   return (
     <BrowserRouter>
@@ -27,6 +30,7 @@ const App: React.FC = () => {
           <Route path="/plant" element={<Plant />} />
           <Route path="/ai" element={<AI />} />
           <Route path="/readings" element={<Readings />} />
+          <Route path="/actuators" element={<ActuatorsDashboard />} />
         </Routes>
       </main>
     </BrowserRouter>

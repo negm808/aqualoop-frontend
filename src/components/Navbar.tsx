@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
 import { useStore } from '../store/useStore';
-import { Bell, Home, LayoutDashboard, Fish, Leaf, Bot, Activity } from 'lucide-react';
+import { Bell, Home, LayoutDashboard, Fish, Leaf, Bot, Activity, Zap } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const wsConnected = useStore((s) => s.wsConnected);
@@ -33,6 +33,7 @@ export const Navbar: React.FC = () => {
         <NavLink to="/fish" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Fish</NavLink>
         <NavLink to="/plant" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Plant</NavLink>
         <NavLink to="/readings" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>Readings</NavLink>
+        <NavLink to="/actuators" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>Actuators</NavLink>
         <NavLink to="/ai" className={({isActive}) => `nav-link ${isActive ? 'active' : ''}`}>AI Terminal</NavLink>
       </div>
 
@@ -112,6 +113,9 @@ export const Navbar: React.FC = () => {
       </NavLink>
       <NavLink to="/readings" className={({ isActive }) => `mobile-tab-link ${isActive ? 'active' : ''}`}>
         <Activity size={20} /> Data
+      </NavLink>
+      <NavLink to="/actuators" className={({ isActive }) => `mobile-tab-link ${isActive ? 'active' : ''}`}>
+        <Zap size={20} /> Actuators
       </NavLink>
       <NavLink to="/ai" className={({ isActive }) => `mobile-tab-link ${isActive ? 'active' : ''}`}>
         <Bot size={20} /> AI
