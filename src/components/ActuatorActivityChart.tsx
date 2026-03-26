@@ -59,7 +59,7 @@ function polyFit(ys: number[], degree = 3): number[] {
     for (let j = i + 1; j < cols; j++) coeffs[i] -= aug[i][j] * coeffs[j];
     coeffs[i] /= aug[i][i];
   }
-  return xs.map(x => coeffs.reduce((sum, c, p) => sum + c * Math.pow(x, p), 0));
+  return xs.map(x => Math.max(0, coeffs.reduce((sum, c, p) => sum + c * Math.pow(x, p), 0)));
 }
 
 export const ActuatorActivityChart: React.FC = () => {

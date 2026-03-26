@@ -34,11 +34,12 @@ export const ActuatorControlCard: React.FC<ActuatorControlCardProps> = ({
   const isAuto = state.mode === 'auto';
 
   return (
-    <div className={`card card-hover ${isOn ? 'active' : ''}`} style={{
+    <div className={`card card-hover actuator-card ${isOn ? 'active' : ''}`} style={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '20px',
-      position: 'relative'
+      gap: '16px',
+      position: 'relative',
+      padding: 'var(--card-padding-mobile, 16px)'
     }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -57,12 +58,12 @@ export const ActuatorControlCard: React.FC<ActuatorControlCardProps> = ({
             {icon}
           </div>
           <div>
-            <h3 className="text-display-sm" style={{ margin: 0 }}>{name}</h3>
+            <h3 className="text-display-sm" style={{ margin: 0, fontSize: '16px' }}>{name}</h3>
             <div style={{ display: 'flex', gap: '6px', marginTop: '4px' }}>
-              <span className={`badge ${isOn ? 'badge-ok' : 'badge-neutral'}`}>
+              <span className={`badge ${isOn ? 'badge-ok' : 'badge-neutral'}`} style={{ fontSize: '9px', padding: '2px 6px' }}>
                 {state.state.toUpperCase()}
               </span>
-              <span className={`badge ${isAuto ? 'badge-info' : 'badge-warn'}`}>
+              <span className={`badge ${isAuto ? 'badge-info' : 'badge-warn'}`} style={{ fontSize: '9px', padding: '2px 6px' }}>
                 {state.mode.toUpperCase()}
               </span>
             </div>
@@ -144,6 +145,12 @@ export const ActuatorControlCard: React.FC<ActuatorControlCardProps> = ({
         .card.active {
           border-color: var(--primary);
           box-shadow: 0 8px 30px rgba(58, 107, 53, 0.1);
+        }
+        @media (min-width: 768px) {
+          .actuator-card {
+            padding: 24px !important;
+            gap: 20px !important;
+          }
         }
       `}</style>
     </div>

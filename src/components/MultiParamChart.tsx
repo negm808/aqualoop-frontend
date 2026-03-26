@@ -81,7 +81,7 @@ function polyFit(ys: number[], degree = 3): number[] {
   }
 
   // Evaluate polynomial at each original x
-  return xs.map(x => coeffs.reduce((sum, c, p) => sum + c * Math.pow(x, p), 0));
+  return xs.map(x => Math.max(0, coeffs.reduce((sum, c, p) => sum + c * Math.pow(x, p), 0)));
 }
 
 // ── Config ──────────────────────────────────────────────────────────

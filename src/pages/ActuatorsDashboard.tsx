@@ -16,14 +16,18 @@ export const ActuatorsDashboard: React.FC = () => {
 
   return (
     <div className="page">
-      <header style={{ marginBottom: '32px' }}>
-        <h1 className="text-display-lg" style={{ margin: 0 }}>Actuators Dashboard</h1>
-        <p className="text-body-lg" style={{ color: 'var(--muted)', marginTop: '8px' }}>
-          Real-time monitoring and control for all system pumps and lights.
+      <header className="page-header" style={{ marginBottom: '24px' }}>
+        <h1 className="text-display-lg" style={{ margin: 0, fontSize: 'clamp(24px, 5vw, 36px)' }}>Actuators Dashboard</h1>
+        <p className="text-body-lg" style={{ color: 'var(--muted)', marginTop: '8px', fontSize: 'clamp(14px, 3vw, 16px)' }}>
+          Real-time monitoring and control for system pumps and lights.
         </p>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gap: 'var(--section-gap)', alignItems: 'start' }} className="stack-on-mobile">
+      <div className="actuator-layout-grid" style={{ 
+        display: 'grid', 
+        gridTemplateColumns: '1fr', 
+        gap: 'var(--section-gap)' 
+      }}>
         {/* Left Column: Chart and Controls */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--section-gap)' }}>
           <ActuatorActivityChart />
@@ -114,6 +118,16 @@ export const ActuatorsDashboard: React.FC = () => {
           </div>
         </div>
       </div>
+      <style>{`
+        @media (min-width: 1024px) {
+          .actuator-layout-grid {
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) !important;
+          }
+        }
+        .page-header {
+          padding-top: 10px;
+        }
+      `}</style>
     </div>
   );
 };
