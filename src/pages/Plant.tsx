@@ -1,15 +1,13 @@
 import React from 'react';
 import { useStore } from '../store/useStore';
-import { Sun, Zap } from 'lucide-react';
+import { Sun } from 'lucide-react';
 import { HarvestCountdown } from '../components/HarvestCountdown';
 import { MultiParamChart } from '../components/MultiParamChart';
-import { ActuatorToggle } from '../components/ActuatorToggle';
 
 export const Plant: React.FC = () => {
   const latestReading = useStore((s) => s.latestReading);
   const activeProfile = useStore((s) => s.activeProfile);
   const setpoints = useStore((s) => s.setpoints);
-  const actuators = useStore((s) => s.actuators);
 
   return (
     <div className="page">
@@ -31,30 +29,6 @@ export const Plant: React.FC = () => {
 
          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <HarvestCountdown />
-              <div className="card glass">
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '20px' }}>
-                   <Zap size={20} color="var(--warning)" />
-                   <div className="text-display-sm" style={{ fontSize: '18px' }}>DWC Actuators</div>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <ActuatorToggle 
-                    id="pump2" 
-                    name="Pump 2 (Nutrient)" 
-                    subtitle="Biofilter → Plant Rafts" 
-                    state={actuators.pump2.state} 
-                    mode={actuators.pump2.mode} 
-                    icon="💧" 
-                  />
-                  <ActuatorToggle 
-                    id="led" 
-                    name="Grow Lights" 
-                    subtitle="BH1750 Controlled" 
-                    state={actuators.led.state} 
-                    mode={actuators.led.mode} 
-                    icon="💡" 
-                  />
-                </div>
-              </div>
 
             <div className="card">
                <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
@@ -62,12 +36,6 @@ export const Plant: React.FC = () => {
                   <div className="text-display-sm" style={{ fontSize: '18px' }}>BH1750 Sensor</div>
                </div>
                <div className="text-display-md">{latestReading?.light || setpoints?.lux_min || '15200'} <span style={{ fontSize: '14px' }}>lux</span></div>
-               <div style={{ marginTop: '20px', padding: '16px', background: 'var(--surface2)', borderRadius: 'var(--r-md)' }}>
-                  <div className="text-label" style={{ marginBottom: '4px' }}>LED STATUS</div>
-                  <div className="text-body" style={{ color: actuators.led.state === 'on' ? 'var(--warning)' : 'var(--muted)', fontWeight: 600 }}>
-                     {actuators.led.state.toUpperCase()} · {actuators.led.mode.toUpperCase()}
-                  </div>
-               </div>
             </div>
          </div>
       </div>

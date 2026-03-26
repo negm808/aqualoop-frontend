@@ -3,12 +3,10 @@ import { useStore } from '../store/useStore';
 import { Fish as FishIcon } from 'lucide-react';
 import { BiomassCalculator } from '../components/BiomassCalculator';
 import { MultiParamChart } from '../components/MultiParamChart';
-import { ActuatorToggle } from '../components/ActuatorToggle';
 
 export const Fish: React.FC = () => {
   const activeProfile = useStore((s) => s.activeProfile);
   const setpoints = useStore((s) => s.setpoints);
-  const actuators = useStore((s) => s.actuators);
 
   return (
     <div className="page">
@@ -43,27 +41,6 @@ export const Fish: React.FC = () => {
                </div>
             </div>
 
-            <div className="card glass">
-               <div className="section-label" style={{ marginBottom: '20px' }}>Filtration Control</div>
-               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <ActuatorToggle 
-                    id="pump1" 
-                    name="Pump 1 (Main)" 
-                    subtitle="Fish → Biofilter Flow" 
-                    state={actuators.pump1.state} 
-                    mode={actuators.pump1.mode} 
-                    icon="💧" 
-                  />
-                  <ActuatorToggle 
-                    id="diluted_pump" 
-                    name="Buffer Pump" 
-                    subtitle="System Balance" 
-                    state={actuators.diluted_pump.state} 
-                    mode={actuators.diluted_pump.mode} 
-                    icon="🔧" 
-                  />
-               </div>
-            </div>
          </div>
       </div>
 

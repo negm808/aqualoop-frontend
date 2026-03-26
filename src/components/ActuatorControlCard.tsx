@@ -1,6 +1,7 @@
 import React from 'react';
 import { useWebSocket } from '../hooks/useWebSocket';
-import { useStore, type ActuatorState } from '../store/useStore';
+import { useStore } from '../store/useStore';
+import type { ActuatorState } from '../store/useStore';
 import { Power, Zap, RotateCcw, Cpu } from 'lucide-react';
 
 interface ActuatorControlCardProps {
