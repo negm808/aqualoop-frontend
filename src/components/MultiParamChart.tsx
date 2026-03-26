@@ -208,7 +208,7 @@ export function MultiParamChart({ title, subtitle, defaultParams, availableParam
       pointHoverBackgroundColor: conf.color,
       pointHoverBorderColor: '#ffffff',
       pointHoverBorderWidth: 3,
-      tension: 0.45,
+      tension: 0.6,
       fill: true,
       borderCapStyle: 'round' as const,
       borderJoinStyle: 'round' as const,

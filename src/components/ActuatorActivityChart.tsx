@@ -23,6 +23,45 @@ ChartJS.register(
   Filler
 );
 
+// ── Polynomial regression (degree 3) for smoothing ──────────────────
+function polyFit(ys: number[], degree = 3): number[] {
+  const n = ys.length;
+  if (n <= degree + 1) return ys;
+  const xs = ys.map((_, i) => i / (n - 1));
+  const cols = degree + 1;
+  const XtX: number[][] = Array.from({ length: cols }, () => new Array(cols).fill(0));
+  const XtY: number[] = new Array(cols).fill(0);
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < cols; j++) {
+      const xpj = Math.pow(xs[i], j);
+      XtY[j] += xpj * ys[i];
+      for (let k = 0; k < cols; k++) {
+        XtX[j][k] += xpj * Math.pow(xs[i], k);
+      }
+    }
+  }
+  const aug = XtX.map((row, i) => [...row, XtY[i]]);
+  for (let col = 0; col < cols; col++) {
+    let maxRow = col;
+    for (let row = col + 1; row < cols; row++) {
+      if (Math.abs(aug[row][col]) > Math.abs(aug[maxRow][col])) maxRow = row;
+    }
+    [aug[col], aug[maxRow]] = [aug[maxRow], aug[col]];
+    if (Math.abs(aug[col][col]) < 1e-12) continue;
+    for (let row = col + 1; row < cols; row++) {
+      const f = aug[row][col] / aug[col][col];
+      for (let j = col; j <= cols; j++) aug[row][j] -= f * aug[col][j];
+    }
+  }
+  const coeffs = new Array(cols).fill(0);
+  for (let i = cols - 1; i >= 0; i--) {
+    coeffs[i] = aug[i][cols];
+    for (let j = i + 1; j < cols; j++) coeffs[i] -= aug[i][j] * coeffs[j];
+    coeffs[i] /= aug[i][i];
+  }
+  return xs.map(x => coeffs.reduce((sum, c, p) => sum + c * Math.pow(x, p), 0));
+}
+
 export const ActuatorActivityChart: React.FC = () => {
   const { actuatorReadings, wsConnected } = useStore();
 
@@ -37,41 +76,41 @@ export const ActuatorActivityChart: React.FC = () => {
       datasets: [
         {
           label: 'Pump 1 (5W)',
-          data: actuatorReadings.map(r => r.pump1),
+          data: actuatorReadings.length > 4 ? polyFit(actuatorReadings.map(r => r.pump1)) : actuatorReadings.map(r => r.pump1),
           borderColor: '#3A6B35', // --primary
           backgroundColor: 'rgba(58, 107, 53, 0.1)',
           fill: true,
-          tension: 0.1,
+          tension: 0.5,
           borderWidth: 2,
           pointRadius: 0,
         },
         {
           label: 'Pump 2 (5W)',
-          data: actuatorReadings.map(r => r.pump2),
+          data: actuatorReadings.length > 4 ? polyFit(actuatorReadings.map(r => r.pump2)) : actuatorReadings.map(r => r.pump2),
           borderColor: '#7B5E3A', // --secondary
           backgroundColor: 'rgba(123, 94, 58, 0.1)',
           fill: true,
-          tension: 0.1,
+          tension: 0.5,
           borderWidth: 2,
           pointRadius: 0,
         },
         {
           label: 'Diluted Pump (4W)',
-          data: actuatorReadings.map(r => r.diluted_pump),
+          data: actuatorReadings.length > 4 ? polyFit(actuatorReadings.map(r => r.diluted_pump)) : actuatorReadings.map(r => r.diluted_pump),
           borderColor: '#C8873A', // --accent
           backgroundColor: 'rgba(200, 135, 58, 0.1)',
           fill: true,
-          tension: 0.1,
+          tension: 0.5,
           borderWidth: 2,
           pointRadius: 0,
         },
         {
           label: 'LED (6W)',
-          data: actuatorReadings.map(r => r.led),
+          data: actuatorReadings.length > 4 ? polyFit(actuatorReadings.map(r => r.led)) : actuatorReadings.map(r => r.led),
           borderColor: '#2563EB', // --info
           backgroundColor: 'rgba(37, 99, 235, 0.1)',
           fill: true,
-          tension: 0.1,
+          tension: 0.5,
           borderWidth: 2,
           pointRadius: 0,
         }

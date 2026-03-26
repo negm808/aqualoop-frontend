@@ -23,7 +23,7 @@ export const Sparkline: React.FC<SparklineProps> = ({ data, color, height = 32 }
   }));
 
   // Create smooth path using command strategy
-  const smoothing = 0.2;
+  const smoothing = 0.35;
   const line = (a: any, b: any) => {
     const lengthX = b.x - a.x;
     const lengthY = b.y - a.y;
